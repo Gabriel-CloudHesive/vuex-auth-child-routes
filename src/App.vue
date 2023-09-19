@@ -1,32 +1,26 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
+    <Loading :active.sync="loading"></Loading>
+    <b-container>
+      <Guest v-if="!isLogged"></Guest>
+      <Logged v-else></Logged>
+      <router-view />
+    </b-container>
   </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import Logged from "@/components/navigation/Logged.vue";
+import Guest from "@/components/navigation/Guest.vue";
+import { mapState } from "vuex";
+import Loading from "vue-loading-overlay";
+import "vue-loading-overlay/dist/vue-loading.css";
 
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+export default {
+  components: { Logged, Guest, Loading },
+  computed: {
+    ...mapState("authentication", ["isLogged"]),
+    ...mapState(["loading"]),
+  },
+};
+</script>
