@@ -1,5 +1,5 @@
 import Vue from "vue";
-export async function name(context, user) {
+export async function signIn(context, user) {
   try {
     context.commit("setLoading", true, { root: true });
     await Vue.axios({
